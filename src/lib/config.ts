@@ -8,7 +8,7 @@ export const PYUSD_MINT = "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo";
 //   process.env.NEXT_PUBLIC_DEV_RPC ?? "https://api.devnet.solana.com	";
 export const endpoint =
   process.env.NEXT_PUBLIC_RPC ?? "https://api.mainnet-beta.solana.com	";
-export const backend_path = "http://146.190.140.156:3000";
+export const backend_path = "https://api.venta.xyz";
 // export const backend_path = "http://localhost:3001";
 export const TOKEN_PROGRAM = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 export const TOKEN_PROGRAM_2022 = "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb";

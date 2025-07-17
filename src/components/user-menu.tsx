@@ -56,6 +56,7 @@ export function UserMenu() {
               id={session.user.id}
               shopName={session.user.name}
               receivingWallet={session.user.receivingWallet}
+              setOpen={setOpen}
             />
           )}
         </DialogContent>

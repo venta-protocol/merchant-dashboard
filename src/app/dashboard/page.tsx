@@ -2,32 +2,16 @@ import { redirect } from "next/navigation";
 import { IShopData } from "@/lib/types.client";
 import AccessDeny from "@/components/access-deny";
 import { auth } from "@/app/auth";
-import { getShopDetails } from "@/lib/http-db";
 import { DashboardSections } from "@/components/dashboard-sections";
 import { UserMenuWrapper } from "@/components/user-menu-wrapper";
 import { Connection, PublicKey } from "@solana/web3.js";
 import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 import { SupportedSplTokens } from "@/lib/constants";
 import { endpoint } from "@/lib/config";
+import { getCachedShopData, setCachedShopData } from "@/lib/cache/shop-data";
 
-async function getShopInfo(): Promise<IShopData | null> {
-  const session = await auth();
-  console.log(session?.user);
-  if (
-    !session ||
-    !session.user ||
-    !session.user.id ||
-    !session.user.email ||
-    !session.user.name ||
-    !session.user.mpcWallet
-  ) {
-    redirect("/login?callbackUrl=/");
-  }
-
-  const shopData = await getShopDetails(session.user.id);
-  if (!shopData) {
-    redirect("/login?callbackUrl=/");
-  }
+async function fetchShopDataFromAPIs(session: any): Promise<IShopData> {
+  console.log("Fetching fresh shop data from APIs...");
 
   const connection = new Connection(endpoint);
   const allBalances = await Promise.all(
@@ -65,6 +49,35 @@ async function getShopInfo(): Promise<IShopData | null> {
     balance: Number(totalBalance),
     receivingWallet: session.user.receivingWallet,
   };
+}
+
+async function getShopInfo(): Promise<IShopData | null> {
+  const session = await auth();
+  console.log(session?.user);
+  if (
+    !session ||
+    !session.user ||
+    !session.user.id ||
+    !session.user.email ||
+    !session.user.name ||
+    !session.user.mpcWallet
+  ) {
+    redirect("/login?callbackUrl=/");
+  }
+
+  // Try to get cached data first (10-minute TTL)
+  const cachedData = await getCachedShopData(session.user.id);
+  if (cachedData) {
+    return cachedData;
+  }
+
+  // Cache miss - fetch fresh data from APIs
+  const freshData = await fetchShopDataFromAPIs(session);
+
+  // Cache the fresh data for 10 minutes
+  await setCachedShopData(session.user.id, freshData);
+
+  return freshData;
 }
 
 export default async function Dashboard() {

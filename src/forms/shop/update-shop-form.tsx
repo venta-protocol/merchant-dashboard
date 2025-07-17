@@ -40,11 +40,13 @@ export interface UpdateFormProps {
   id: string;
   shopName: string;
   receivingWallet: string;
+  setOpen: (open: boolean) => void;
 }
 
 export const UpdateForm: FC<UpdateFormProps> = ({
   shopName,
   receivingWallet,
+  setOpen,
 }) => {
   const router = useRouter();
   const { update } = useSession();
@@ -85,6 +87,7 @@ export const UpdateForm: FC<UpdateFormProps> = ({
       });
 
       toast.success("Shop info updated successfully");
+      setOpen(false);
       router.refresh();
     } catch (err) {
       console.error(err);

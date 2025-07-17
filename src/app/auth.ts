@@ -3,13 +3,13 @@ import EmailProvider from "next-auth/providers/nodemailer";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/lib/db";
-import { fetchLoginData } from "@/lib/http-db";
 import {
   EMAIL_HOST,
   EMAIL_PORT,
   EMAIL_USER,
   EMAIL_PASSWORD,
   EMAIL_FROM,
+  backend_path,
 } from "@/lib/config";
 
 const generateVerificationToken = () => {
@@ -46,8 +46,18 @@ export const authConfig = {
 
         if (!userEmail) return null;
 
-        const shopData = await fetchLoginData(userEmail);
-        if (shopData) return shopData;
+        const shopDataRes = await fetch(
+          `${backend_path}/v1/admin/shop-login?email=${userEmail}`,
+          {
+            method: "GET",
+            headers: { "x-admin-key": process.env.ADMIN_KEY! },
+          }
+        );
+        const { data: shopData, success } = await shopDataRes.json();
+
+        if (shopData && success) return shopData;
+
+        // Checck all cache
 
         return null;
       },
