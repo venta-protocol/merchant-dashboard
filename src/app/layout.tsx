@@ -14,6 +14,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Venta Merchant Dashboard",
   description: "Venta Merchant Dashboard",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 // RootLayout Component
