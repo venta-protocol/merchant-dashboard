@@ -1,0 +1,976 @@
+{
+  "address": "FBMakVDotigJotn7fZVEzWuCmyZXHzefVibZaKJ4L1BD",
+  "metadata": {
+    "name": "ember",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "close_customer",
+      "discriminator": [
+        245,
+        28,
+        17,
+        116,
+        225,
+        235,
+        169,
+        151
+      ],
+      "accounts": [
+        {
+          "name": "fee_receiver",
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global"
+        },
+        {
+          "name": "merchant",
+          "writable": true
+        },
+        {
+          "name": "customer",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "close_merchant",
+      "discriminator": [
+        138,
+        96,
+        102,
+        11,
+        220,
+        136,
+        154,
+        11
+      ],
+      "accounts": [
+        {
+          "name": "fee_receiver",
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global"
+        },
+        {
+          "name": "merchant",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "init_customer",
+      "discriminator": [
+        134,
+        21,
+        29,
+        69,
+        93,
+        254,
+        79,
+        9
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "merchant"
+        },
+        {
+          "name": "customer",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  109,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              },
+              {
+                "kind": "account",
+                "path": "merchant"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "init_merchant",
+      "discriminator": [
+        209,
+        11,
+        214,
+        195,
+        222,
+        157,
+        124,
+        192
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "merchant",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  114,
+                  99,
+                  104,
+                  97,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "seed",
+          "type": "pubkey"
+        },
+        {
+          "name": "reward_expiry_duration_days",
+          "type": "u16"
+        },
+        {
+          "name": "volume_rolling_duration_days",
+          "type": "u16"
+        },
+        {
+          "name": "tiers",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "Tier"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "init_or_update_global",
+      "discriminator": [
+        38,
+        171,
+        50,
+        229,
+        111,
+        141,
+        84,
+        172
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "main_authority",
+          "type": {
+            "option": "pubkey"
+          }
+        },
+        {
+          "name": "manager_authority",
+          "type": {
+            "option": "pubkey"
+          }
+        },
+        {
+          "name": "state",
+          "type": {
+            "option": {
+              "defined": {
+                "name": "State"
+              }
+            }
+          }
+        },
+        {
+          "name": "treasury",
+          "type": {
+            "option": "pubkey"
+          }
+        },
+        {
+          "name": "global_fee_bps",
+          "type": {
+            "option": "u16"
+          }
+        },
+        {
+          "name": "whitelisted_tokens",
+          "type": {
+            "option": {
+              "array": [
+                "pubkey",
+                10
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "make_payment",
+      "discriminator": [
+        19,
+        128,
+        153,
+        121,
+        221,
+        192,
+        91,
+        53
+      ],
+      "accounts": [
+        {
+          "name": "global"
+        },
+        {
+          "name": "merchant",
+          "writable": true
+        },
+        {
+          "name": "customer",
+          "writable": true
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "buyer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "buyer_ata",
+          "writable": true
+        },
+        {
+          "name": "shop_wallet_ata",
+          "writable": true
+        },
+        {
+          "name": "treasury_ata",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "addtional_fee",
+          "type": {
+            "option": "u64"
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_customer",
+      "discriminator": [
+        158,
+        118,
+        103,
+        177,
+        241,
+        229,
+        169,
+        124
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "merchant",
+          "writable": true
+        },
+        {
+          "name": "customer",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "total_volume",
+          "type": {
+            "option": "u32"
+          }
+        },
+        {
+          "name": "pending_reward",
+          "type": {
+            "option": "u32"
+          }
+        },
+        {
+          "name": "volume_epoch_day",
+          "type": {
+            "option": "u16"
+          }
+        },
+        {
+          "name": "blacklist_status",
+          "type": {
+            "option": "bool"
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_merchant",
+      "discriminator": [
+        192,
+        114,
+        143,
+        220,
+        199,
+        50,
+        234,
+        165
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "merchant",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "authority",
+          "type": {
+            "option": "pubkey"
+          }
+        },
+        {
+          "name": "reward_expiry_duration_days",
+          "type": {
+            "option": "u16"
+          }
+        },
+        {
+          "name": "volume_rolling_duration_days",
+          "type": {
+            "option": "u16"
+          }
+        },
+        {
+          "name": "state",
+          "type": {
+            "option": {
+              "defined": {
+                "name": "State"
+              }
+            }
+          }
+        },
+        {
+          "name": "tiers",
+          "type": {
+            "option": {
+              "vec": {
+                "defined": {
+                  "name": "Tier"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Customer",
+      "discriminator": [
+        112,
+        147,
+        140,
+        31,
+        93,
+        186,
+        103,
+        18
+      ]
+    },
+    {
+      "name": "Global",
+      "discriminator": [
+        167,
+        232,
+        232,
+        177,
+        200,
+        108,
+        114,
+        127
+      ]
+    },
+    {
+      "name": "Merchant",
+      "discriminator": [
+        71,
+        235,
+        30,
+        40,
+        231,
+        21,
+        32,
+        64
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidGlobal",
+      "msg": "Invalid global account"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidMerchant",
+      "msg": "Invalid merchant account"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidCustomer",
+      "msg": "Invalid customer"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidMerchantAuthority",
+      "msg": "Invalid merchant authority"
+    },
+    {
+      "code": 6004,
+      "name": "ClaimableNotZero",
+      "msg": "Claim all amount before closing merchant"
+    },
+    {
+      "code": 6005,
+      "name": "CustomerNotZero",
+      "msg": "Close all customer before closing merchant"
+    },
+    {
+      "code": 6006,
+      "name": "TierNotFound",
+      "msg": "Tier not found"
+    },
+    {
+      "code": 6007,
+      "name": "CustomerBlacklisted",
+      "msg": "Customer is blacklisted"
+    },
+    {
+      "code": 6008,
+      "name": "Unauthorized",
+      "msg": "Unauthorized"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidMint",
+      "msg": "Invalid mint"
+    },
+    {
+      "code": 6010,
+      "name": "FrozenMerchantAccount",
+      "msg": "Frozen merchant account"
+    },
+    {
+      "code": 6011,
+      "name": "Overflow",
+      "msg": "Overflow in calculation"
+    },
+    {
+      "code": 6012,
+      "name": "InsufficientBalance",
+      "msg": "Insufficient balance"
+    },
+    {
+      "code": 6013,
+      "name": "InvalidAmountInput",
+      "msg": "Amount must be greater than 0"
+    },
+    {
+      "code": 6014,
+      "name": "InvalidDiscriminator",
+      "msg": "Invalid discriminator input"
+    },
+    {
+      "code": 6015,
+      "name": "ProtocolHalted",
+      "msg": "Protocal is halted"
+    },
+    {
+      "code": 6016,
+      "name": "IllegalMerchantUpdate",
+      "msg": "Merchant must not be frozen for Wallet or 2FA update"
+    },
+    {
+      "code": 6017,
+      "name": "InvalidTierCount",
+      "msg": "Tier count must not exceed 10"
+    },
+    {
+      "code": 6018,
+      "name": "ExceedU16Limit",
+      "msg": "Exceed u16 limit"
+    },
+    {
+      "code": 6019,
+      "name": "ExceedU32Limit",
+      "msg": "Exceed u32 limit"
+    },
+    {
+      "code": 6020,
+      "name": "InvalidRemainingAccounts",
+      "msg": "Invalid remaining accounts"
+    },
+    {
+      "code": 6021,
+      "name": "UnauthorizedCaller",
+      "msg": "Unauthorized caller"
+    },
+    {
+      "code": 6022,
+      "name": "InvalidArguments",
+      "msg": "Invalid arguments"
+    },
+    {
+      "code": 6023,
+      "name": "InvalidBalanceSheet",
+      "msg": "Invalid balance sheet"
+    },
+    {
+      "code": 6024,
+      "name": "InvalidMerchantProgramOwner",
+      "msg": "Invalid merchant program owner"
+    },
+    {
+      "code": 6025,
+      "name": "InvalidGlobalTreasury",
+      "msg": "Invalid global treasury"
+    },
+    {
+      "code": 6026,
+      "name": "InvalidRewardMint",
+      "msg": "Invalid reward mint"
+    },
+    {
+      "code": 6027,
+      "name": "InvalidTokenOwner",
+      "msg": "Invalid token owner"
+    },
+    {
+      "code": 6028,
+      "name": "InvalidSysvar",
+      "msg": "Invalid sysvar"
+    },
+    {
+      "code": 6029,
+      "name": "InvalidShopWallet",
+      "msg": "Invalid shop wallet"
+    },
+    {
+      "code": 6030,
+      "name": "InvalidGlobalState",
+      "msg": "Invalid global state"
+    },
+    {
+      "code": 6031,
+      "name": "InvalidMerchantState",
+      "msg": "Invalid merchant state"
+    },
+    {
+      "code": 6032,
+      "name": "InvalidCustomerState",
+      "msg": "Invalid customer state"
+    },
+    {
+      "code": 6033,
+      "name": "InvalidTreasury",
+      "msg": "Invalid treasury"
+    }
+  ],
+  "types": [
+    {
+      "name": "Customer",
+      "serialization": "bytemuckunsafe",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "merchant",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_volume_cents",
+            "type": "u32"
+          },
+          {
+            "name": "pending_reward_cents",
+            "type": "u32"
+          },
+          {
+            "name": "volume_epoch_day",
+            "type": "u16"
+          },
+          {
+            "name": "reward_epoch_day",
+            "type": "u16"
+          },
+          {
+            "name": "blacklisted",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                1
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Global",
+      "serialization": "bytemuckunsafe",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "main_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "manager_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "treasury",
+            "type": "pubkey"
+          },
+          {
+            "name": "whitelisted_tokens",
+            "type": {
+              "array": [
+                "pubkey",
+                10
+              ]
+            }
+          },
+          {
+            "name": "global_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "state",
+            "type": {
+              "defined": {
+                "name": "State"
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "_padding",
+            "type": {
+              "array": [
+                "u8",
+                3
+              ]
+            }
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Merchant",
+      "serialization": "bytemuckunsafe",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "seed",
+            "type": "pubkey"
+          },
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "pending_reward",
+            "type": "u64"
+          },
+          {
+            "name": "initialize_date",
+            "type": "u64"
+          },
+          {
+            "name": "tiers",
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "Tier"
+                  }
+                },
+                10
+              ]
+            }
+          },
+          {
+            "name": "reward_expiry_duration_days",
+            "type": "u16"
+          },
+          {
+            "name": "volume_rolling_duration_days",
+            "type": "u16"
+          },
+          {
+            "name": "state",
+            "type": {
+              "defined": {
+                "name": "State"
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "_padding",
+            "type": {
+              "array": [
+                "u8",
+                1
+              ]
+            }
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                128
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "State",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Normal"
+          },
+          {
+            "name": "Halt"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tier",
+      "serialization": "bytemuckunsafe",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "volume_requirement_cent",
+            "type": "u32"
+          },
+          {
+            "name": "total_reward_bps",
+            "type": "u16"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                2
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
