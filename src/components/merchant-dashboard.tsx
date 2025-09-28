@@ -76,13 +76,18 @@ export const MerchantDashboard = {
             buttonText: `Withdraw ${balance} USD`,
             description: "Send transfer request",
           });
-          const connection = new Connection(endpoint);
-          const confirmation = await connection.getTransaction(signature, {
-            commitment: "confirmed",
-            maxSupportedTransactionVersion: 0,
-          });
+          const connection = new Connection(endpoint, "processed");
+          const { blockhash, lastValidBlockHeight } =
+            await connection.getLatestBlockhash();
+          const confirmation = await connection.confirmTransaction(
+            { signature, blockhash, lastValidBlockHeight },
+            "processed"
+          );
 
-          if (confirmation && !confirmation.meta?.err) {
+          if (confirmation && !confirmation.value?.err) {
+            await sendBackendRequest(Endpoint.MERCHANT, HttpMethod.PUT, {
+              action: "refresh",
+            });
             toast.success(`Successfully withdraw ${balance} USD`);
           } else {
             toast.error("Transaction failed, please try agian");

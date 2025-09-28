@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/app/auth";
 import { backend_path } from "@/lib/config";
 import {
-  invalidateCachedShopData,
   refreshCachedShopData,
 } from "@/lib/cache/shop-data";
 

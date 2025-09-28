@@ -13,7 +13,7 @@ import { getCachedShopData, setCachedShopData } from "@/lib/cache/shop-data";
 async function fetchShopDataFromAPIs(session: any): Promise<IShopData> {
   console.log("Fetching fresh shop data from APIs...");
 
-  const connection = new Connection(endpoint);
+  const connection = new Connection(endpoint, "processed");
   const allBalances = await Promise.all(
     SupportedSplTokens.map(async (token) => {
       const mpcWalletAta = getAssociatedTokenAddressSync(

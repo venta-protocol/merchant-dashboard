@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { usePrivy } from "@privy-io/react-auth";
 import { LoginButton } from "@/components/privy-login";
-import { Endpoint, HttpMethod } from "@/lib/types.client";
-import { sendBackendRequest } from "@/lib/utils.client";
 
 export const EmailForm = () => {
   const router = useRouter();
@@ -58,7 +56,7 @@ export const EmailForm = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <LoginButton />
+      <LoginButton hasRunLogin={hasRunLogin} />
     </div>
   );
 };
